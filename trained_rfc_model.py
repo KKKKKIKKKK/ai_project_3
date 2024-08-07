@@ -35,7 +35,7 @@ class TrainedRfcModel:
         top_3_areas = label_encoders['VISIT_AREA_NM'].inverse_transform(top_3_indices)
 
         # 예측 결과 출력
-        print(f'Top 3 visit areas based on predicted probabilities: {top_3_areas}')
+        print(f'만족도가 높을 것으로 예상되는 상위 3개 방문지: {top_3_areas}')
 
         return top_3_areas
 
@@ -69,7 +69,12 @@ class TrainedRfcModel:
         visit_area_info = visit_df[visit_df['VISIT_AREA_NM'].isin(top_3)]
         print(visit_area_info)
 
-        return visit_area_info
+        return visit_area_info.rename(columns={
+            'VISIT_AREA_NM': '방문지이름',
+            'ROAD_NM_ADDR': '도로명주소',
+            'X_COORD': '경도',
+            'Y_COORD': '위도'
+        })
 
 
 if __name__ == '__main__':
